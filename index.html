@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playfair Capital — Pre-Seed Venture Capital</title>
+  <meta name="description" content="Playfair Capital invests exclusively at pre-seed in the UK & Europe. We give founders an unfair advantage." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08090d;
+      --bg2: #0f1118;
+      --gold: #c8a96e;
+      --gold-light: #e2c98a;
+      --white: #f0ede6;
+      --muted: #6b6b78;
+      --border: rgba(200,169,110,0.15);
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--ff-display);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.6rem 3rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s, background 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      border-color: var(--border);
+      background: rgba(8,9,13,0.85);
+      backdrop-filter: blur(16px);
+    }
+    .logo {
+      font-family: var(--ff-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .logo span { color: var(--white); font-weight: 300; }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      padding: 8rem 3rem 6rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,169,110,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(200,169,110,0.04) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1100px; width: 100%;
+      display: grid; gap: 2.5rem;
+    }
+    .hero-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+    .hero-headline {
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      max-width: 560px;
+      font-size: 1.15rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(240,237,230,0.65);
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.6s;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.8s;
+    }
+    .btn-primary {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.9rem 2.2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-outline {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.9rem 2.2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); }
+    .hero-stat-bar {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1s;
+    }
+    .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+    .stat-val {
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION WRAPPER ── */
+    section { padding: 7rem 3rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── LABEL ── */
+    .section-label {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .manifesto-text {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      max-width: 820px;
+    }
+    .manifesto-text em { font-style: italic; color: var(--gold); }
+    .manifesto-note {
+      margin-top: 2.5rem;
+      font-family: var(--ff-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .manifesto-note strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    /* ── TRACK RECORD ── */
+    .track-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+    .track-cell {
+      background: var(--bg);
+      padding: 2.5rem 2rem;
+      transition: background 0.2s;
+    }
+    .track-cell:hover { background: var(--bg2); }
+    .track-cell-num {
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .track-cell-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.55;
+      color: rgba(240,237,230,0.65);
+    }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-ticker {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+      padding: 0;
+    }
+    .ticker-inner {
+      display: flex;
+      animation: ticker 28s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      display: flex; align-items: center;
+      padding: 1.4rem 3rem;
+      border-right: 1px solid var(--border);
+      gap: 1rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .ticker-name {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+    .ticker-raise {
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-top: none;
+    }
+    .portfolio-card {
+      background: var(--bg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .portfolio-card:hover { background: var(--bg2); }
+    .p-company {
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+    .p-round {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .p-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── APPROACH ── */
+    .approach { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .approach-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .approach-headline {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .approach-headline em { color: var(--gold); font-style: italic; }
+    .approach-list { display: flex; flex-direction: column; gap: 2rem; }
+    .approach-item {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+    .approach-num {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      padding-top: 0.25rem;
+    }
+    .approach-title {
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 0.35rem;
+    }
+    .approach-body {
+      font-size: 0.88rem;
+      color: rgba(240,237,230,0.55);
+      line-height: 1.6;
+    }
+
+    /* ── THESIS ── */
+    .thesis-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .thesis-card {
+      border: 1px solid var(--border);
+      padding: 2.2rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .thesis-card:hover {
+      border-color: rgba(200,169,110,0.4);
+      background: var(--bg2);
+    }
+    .thesis-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .thesis-title {
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+    .thesis-body {
+      font-size: 0.875rem;
+      color: rgba(240,237,230,0.55);
+      line-height: 1.65;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+    .testimonial {
+      background: var(--bg2);
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .testimonial-quote {
+      font-size: 1rem;
+      line-height: 1.65;
+      color: rgba(240,237,230,0.8);
+      font-style: italic;
+    }
+    .testimonial-author {
+      display: flex; flex-direction: column; gap: 0.2rem;
+      margin-top: auto;
+    }
+    .testimonial-name {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--white);
+    }
+    .testimonial-role {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── CTA / FOOTER ── */
+    .cta-section {
+      text-align: center;
+      display: grid;
+      place-items: center;
+      gap: 2.5rem;
+      padding: 9rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(200,169,110,0.07) 0%, transparent 70%);
+    }
+    .cta-headline {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      position: relative; z-index: 1;
+    }
+    .cta-headline em { font-style: italic; color: var(--gold); }
+    .cta-sub {
+      font-size: 1.05rem;
+      color: rgba(240,237,230,0.55);
+      max-width: 480px;
+      line-height: 1.6;
+      position: relative; z-index: 1;
+    }
+    .cta-actions { display: flex; gap: 1rem; position: relative; z-index: 1; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-left {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .footer-links a {
+      font-family: var(--ff-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── DIVIDER LINE ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── HAMBURGER MOBILE ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 1px; background: var(--white); transition: 0.3s; }
+
+    @media (max-width: 900px) {
+      nav { padding: 1.4rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      .track-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr 1fr; }
+      .approach-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .thesis-cols { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .cta-actions { flex-direction: column; }
+      footer { padding: 2rem 1.5rem; }
+      .footer-links { flex-wrap: wrap; gap: 1rem; }
+    }
+    @media (max-width: 600px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .hero-stat-bar { gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav id="nav">
+  <a class="logo" href="#">Playfair <span>Capital</span></a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#thesis">Thesis</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#founders">Founders</a></li>
+  </ul>
+  <a class="nav-cta" href="#pitch">Pitch Us</a>
+  <div class="hamburger" id="ham">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Pre-Seed Venture Capital · UK & Europe</p>
+    <h1 class="hero-headline">We play <em>fair</em><br>by founders</h1>
+    <p class="hero-sub">
+      Investing exclusively at pre-seed from our £57m Fund III — we give you an unfair advantage, taking you from where you are to where you want to be.
+    </p>
+    <div class="hero-actions">
+      <a href="#pitch" class="btn-primary">Pitch Us</a>
+      <a href="#portfolio" class="btn-outline">View Portfolio</a>
+    </div>
+    <div class="hero-stat-bar">
+      <div class="stat">
+        <span class="stat-val">78%</span>
+        <span class="stat-label">Pre-seed → Series A rate</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">&gt;$3bn</span>
+        <span class="stat-label">Follow-on capital raised</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">£57m</span>
+        <span class="stat-label">Fund III size</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">2013</span>
+        <span class="stat-label">Investing since</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MANIFESTO ── -->
+<section class="manifesto">
+  <div class="container">
+    <div class="section-label reveal">Philosophy</div>
+    <p class="manifesto-text reveal">
+      We partner with <em>visionary founders</em> — with hustle, heart and humility — who see the world not as it is, but as it could be, and together build durable foundations for growth.
+    </p>
+    <p class="manifesto-note reveal">
+      Our pre-seed to Series A graduation rate is <strong>78%</strong> — approximately <strong>4× the industry average</strong>.
+    </p>
+  </div>
+</section>
+
+<!-- ── TRACK RECORD ── -->
+<section id="team">
+  <div class="container">
+    <div class="section-label reveal">Track Record</div>
+    <div class="track-grid reveal">
+      <div class="track-cell">
+        <div class="track-cell-num">&gt;$3bn</div>
+        <div class="track-cell-desc">Follow-on capital raised by our portfolio founders since 2013, from the world's best specialist and multi-stage funds.</div>
+      </div>
+      <div class="track-cell">
+        <div class="track-cell-num">78%</div>
+        <div class="track-cell-desc">Pre-seed to Series A graduation rate — roughly four times the industry average. We stay with founders through the journey.</div>
+      </div>
+      <div class="track-cell">
+        <div class="track-cell-num">6</div>
+        <div class="track-cell-desc">New investments per year. We are highly selective — when we invest, we are fully committed and give you our time and energy.</div>
+      </div>
+      <div class="track-cell">
+        <div class="track-cell-num">60%</div>
+        <div class="track-cell-desc">Of the fund reserved for follow-on capital. We support you all the way through Series A, with capacity to invest up to £5m per company.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO ── -->
+<section id="portfolio" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-label reveal">Portfolio Highlights</div>
+    <div class="portfolio-ticker">
+      <div class="ticker-inner">
+        <!-- first copy -->
+        <div class="ticker-item"><span class="ticker-name">Nory</span><span class="ticker-raise">$37m Series B · Kinnevik</span></div>
+        <div class="ticker-item"><span class="ticker-name">Orca Security</span><span class="ticker-raise">$72.5m Series B · BPC</span></div>
+        <div class="ticker-item"><span class="ticker-name">Protex AI</span><span class="ticker-raise">$36m Series B · Hedosophia</span></div>
+        <div class="ticker-item"><span class="ticker-name">Recycleye</span><span class="ticker-raise">$17m Series A · DCVC</span></div>
+        <div class="ticker-item"><span class="ticker-name">StackOne</span><span class="ticker-raise">$20m Series A · GV</span></div>
+        <div class="ticker-item"><span class="ticker-name">Passionfroot</span><span class="ticker-raise">Seed · Index</span></div>
+        <div class="ticker-item"><span class="ticker-name">Airbank</span><span class="ticker-raise">Series A · Notion</span></div>
+        <!-- duplicate for seamless loop -->
+        <div class="ticker-item"><span class="ticker-name">Nory</span><span class="ticker-raise">$37m Series B · Kinnevik</span></div>
+        <div class="ticker-item"><span class="ticker-name">Orca Security</span><span class="ticker-raise">$72.5m Series B · BPC</span></div>
+        <div class="ticker-item"><span class="ticker-name">Protex AI</span><span class="ticker-raise">$36m Series B · Hedosophia</span></div>
+        <div class="ticker-item"><span class="ticker-name">Recycleye</span><span class="ticker-raise">$17m Series A · DCVC</span></div>
+        <div class="ticker-item"><span class="ticker-name">StackOne</span><span class="ticker-raise">$20m Series A · GV</span></div>
+        <div class="ticker-item"><span class="ticker-name">Passionfroot</span><span class="ticker-raise">Seed · Index</span></div>
+        <div class="ticker-item"><span class="ticker-name">Airbank</span><span class="ticker-raise">Series A · Notion</span></div>
+      </div>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="p-company">Nory</div>
+        <div class="p-round">$37m Series B</div>
+        <div class="p-desc">AI-powered restaurant operations platform transforming how hospitality businesses run.</div>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-company">Protex AI</div>
+        <div class="p-round">$36m Series B</div>
+        <div class="p-desc">Computer vision for workplace safety, preventing accidents before they happen.</div>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-company">Recycleye</div>
+        <div class="p-round">$17m Series A</div>
+        <div class="p-desc">Robotic recycling technology that automatically sorts waste with AI precision.</div>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-company">StackOne</div>
+        <div class="p-round">$20m Series A</div>
+        <div class="p-desc">Unified API platform enabling companies to integrate HR and payroll systems instantly.</div>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-company">Passionfroot</div>
+        <div class="p-round">Seed · Index Ventures</div>
+        <div class="p-desc">The creator economy OS — helping creators manage their business like a pro.</div>
+      </div>
+      <div class="portfolio-card">
+        <div class="p-company">Airbank</div>
+        <div class="p-round">Series A · Notion Capital</div>
+        <div class="p-desc">Financial operations hub giving startups and SMEs full control of their cash flow.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── APPROACH ── -->
+<section class="approach" id="approach">
+  <div class="container">
+    <div class="approach-layout">
+      <div>
+        <div class="section-label reveal">How We Invest</div>
+        <h2 class="approach-headline reveal">
+          Highly selective.<br><em>All in</em> when we commit.
+        </h2>
+      </div>
+      <div class="approach-list">
+        <div class="approach-item reveal">
+          <span class="approach-num">01</span>
+          <div>
+            <div class="approach-title">Pre-seed focus only</div>
+            <div class="approach-body">We invest exclusively at pre-seed, writing cheques from £100k for angel rounds up to £1.5m for the largest pre-seed rounds. No exceptions.</div>
+          </div>
+        </div>
+        <div class="approach-item reveal">
+          <span class="approach-num">02</span>
+          <div>
+            <div class="approach-title">Co-invest in 100% of deals</div>
+            <div class="approach-body">We co-invest in every new investment, optimising for the best combination of funds and angels, adding strategic value to your cap table.</div>
+          </div>
+        </div>
+        <div class="approach-item reveal">
+          <span class="approach-num">03</span>
+          <div>
+            <div class="approach-title">Long-term follow-on</div>
+            <div class="approach-body">60% of the fund is reserved for follow-on capital. We can deploy up to £5m per company and stay through Series A — and beyond.</div>
+          </div>
+        </div>
+        <div class="approach-item reveal">
+          <span class="approach-num">04</span>
+          <div>
+            <div class="approach-title">Founders Choice VC top 3</div>
+            <div class="approach-body">We rank in the top three of the Founders Choice VC European leaderboard. The most important validation comes from the founders we back.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── THESIS ── -->
+<section id="thesis">
+  <div class="container">
+    <div class="section-label reveal">Investment Thesis</div>
+    <h2 class="approach-headline reveal" style="max-width:600px; margin-bottom:0;">
+      We back founders who see the world <em>differently</em>
+    </h2>
+    <div class="thesis-cols">
+      <div class="thesis-card reveal">
+        <div class="thesis-icon">◎</div>
+        <div class="thesis-title">Deep Tech & AI</div>
+        <div class="thesis-body">Transformative technology at the intersection of AI, automation, and scientific breakthroughs. We look for applications with defensible moats.</div>
+      </div>
+      <div class="thesis-card reveal">
+        <div class="thesis-icon">◈</div>
+        <div class="thesis-title">Future of Work</div>
+        <div class="thesis-body">Platforms reshaping how people work, collaborate, and build organisations. From productivity infrastructure to talent marketplaces.</div>
+      </div>
+      <div class="thesis-card reveal">
+        <div class="thesis-icon">◉</div>
+        <div class="thesis-title">Climate & Sustainability</div>
+        <div class="thesis-body">Technology-enabled solutions addressing the most urgent environmental challenges — from clean energy to circular economy infrastructure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials" id="founders">
+  <div class="container">
+    <div class="section-label reveal">What Founders Say</div>
+    <h2 class="approach-headline reveal" style="max-width:500px; margin-bottom:0;">
+      The most important voices are our <em>founders'</em>
+    </h2>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <p class="testimonial-quote">"Playfair were the first to truly believe in what we were building. They didn't just write a cheque — they became genuine partners in every sense of the word."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">CEO, Nory</span>
+          <span class="testimonial-role">$37m Series B · Kinnevik</span>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <p class="testimonial-quote">"The team at Playfair bring an incredible network and hands-on approach that no other pre-seed investor came close to matching. Highly recommend."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">Founder, Recycleye</span>
+          <span class="testimonial-role">$17m Series A · DCVC</span>
+        </div>
+      </div>
+      <div class="testimonial reveal">
+        <p class="testimonial-quote">"Having Playfair in our corner at the pre-seed stage set the tone for every fundraise that followed. Their conviction opened doors we didn't know existed."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">Co-founder, StackOne</span>
+          <span class="testimonial-role">$20m Series A · GV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="pitch">
+  <div class="cta-bg"></div>
+  <p class="hero-eyebrow" style="opacity:1;">Ready to build something extraordinary?</p>
+  <h2 class="cta-headline">Come in and<br>find out <em>more</em></h2>
+  <p class="cta-sub">We'd love to hear from you. Whether you have a deck, a prototype, or just an idea — we're always happy to talk.</p>
+  <div class="cta-actions">
+    <a href="mailto:hello@playfair-cap.com" class="btn-primary">Pitch Us</a>
+    <a href="#portfolio" class="btn-outline">Explore Portfolio</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left">© 2025 Playfair Capital · London, UK</div>
+  <ul class="footer-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#thesis">Thesis</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#founders">Founders</a></li>
+    <li><a href="#pitch">Pitch Us</a></li>
+    <li><a href="mailto:hello@playfair-cap.com">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => io.observe(el));
+
+  // Stagger children
+  document.querySelectorAll('.track-grid, .thesis-cols, .testimonials-grid, .approach-list').forEach(parent => {
+    [...parent.children].forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.1}s`;
+    });
+  });
+</script>
+</body>
+</html>
