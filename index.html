@@ -7,599 +7,424 @@
   <meta name="description" content="Playfair Capital invests exclusively at pre-seed in the UK & Europe. We give founders an unfair advantage." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #08090d;
-      --bg2: #0f1118;
-      --gold: #c8a96e;
-      --gold-light: #e2c98a;
-      --white: #f0ede6;
-      --muted: #6b6b78;
-      --border: rgba(200,169,110,0.15);
-      --ff-display: 'Cormorant Garamond', Georgia, serif;
-      --ff-mono: 'DM Mono', monospace;
+      --bg:     #f0ead9;
+      --bg2:    #e2d9c6;
+      --ink:    #0e0c09;
+      --ink2:   #211e18;
+      --muted:  #52504a;
+      --rule:   rgba(14,12,9,0.28);
+      --acc:    #2a5e43;
+      --acc-l:  #3a7858;
+      --ff-serif: 'Cormorant Garamond', Georgia, serif;
+      --ff-mono:  'DM Mono', monospace;
+      --ff-body:  'DM Sans', system-ui, sans-serif;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
-      color: var(--white);
-      font-family: var(--ff-display);
-      font-weight: 300;
+      color: var(--ink);
+      font-family: var(--ff-body);
+      font-weight: 400;
       overflow-x: hidden;
-    }
-
-    /* ── NOISE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 9999;
     }
 
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.6rem 3rem;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.4s, background 0.4s, backdrop-filter 0.4s;
+      padding: 1.5rem 3rem;
+      background: var(--bg);
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.35s, box-shadow 0.35s;
     }
     nav.scrolled {
-      border-color: var(--border);
-      background: rgba(8,9,13,0.85);
-      backdrop-filter: blur(16px);
+      border-color: var(--rule);
+      box-shadow: 0 1px 24px rgba(14,12,9,0.07);
     }
     .logo {
-      font-family: var(--ff-display);
-      font-size: 1.15rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-decoration: none;
+      font-family: var(--ff-serif);
+      font-size: 1.15rem; font-weight: 400; letter-spacing: 0.04em;
+      color: var(--ink); text-decoration: none;
     }
-    .logo span { color: var(--white); font-weight: 300; }
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
-    }
+    .logo em { font-style: italic; color: var(--acc); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      font-family: var(--ff-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-family: var(--ff-mono); font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: var(--ink); }
+
     .nav-cta {
-      font-family: var(--ff-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--gold);
-      border: none;
-      padding: 0.6rem 1.4rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      font-family: var(--ff-mono); font-size: 0.68rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff; background: var(--acc);
+      border: none; padding: 0.6rem 1.4rem;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
     }
-    .nav-cta:hover { background: var(--gold-light); }
+    .nav-cta:hover { background: var(--acc-l); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+    .hamburger span { width: 22px; height: 1px; background: var(--ink); display: block; }
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      position: relative;
-      padding: 8rem 3rem 6rem;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,169,110,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(200,169,110,0.04) 0%, transparent 60%);
+      min-height: 100vh; display: grid; place-items: center;
+      position: relative; padding: 8rem 3rem 6rem; overflow: hidden;
     }
     .hero-grid {
       position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
-      background-size: 80px 80px;
+        linear-gradient(rgba(14,12,9,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,12,9,0.06) 1px, transparent 1px);
+      background-size: 72px 72px;
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
     }
     .hero-inner {
       position: relative; z-index: 2;
-      max-width: 1100px; width: 100%;
-      display: grid; gap: 2.5rem;
+      max-width: 1100px; width: 100%; display: grid; gap: 2.5rem;
     }
     .hero-eyebrow {
-      font-family: var(--ff-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards 0.2s;
+      font-family: var(--ff-mono); font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--acc);
+      opacity: 0; animation: fadeUp 0.8s ease forwards 0.15s;
     }
     .hero-headline {
-      font-size: clamp(3.5rem, 8vw, 7.5rem);
-      font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.4s;
+      font-family: var(--ff-serif);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 400; line-height: 1.0; letter-spacing: -0.01em;
+      color: var(--ink);
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.3s;
     }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--gold);
-    }
+    .hero-headline em { font-style: italic; color: var(--acc); }
+
     .hero-sub {
-      max-width: 560px;
-      font-size: 1.15rem;
-      font-weight: 300;
-      line-height: 1.65;
-      color: rgba(240,237,230,0.65);
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.6s;
+      max-width: 540px; font-size: 1.05rem;
+      font-weight: 400; line-height: 1.7; color: var(--ink2);
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.5s;
     }
     .hero-actions {
       display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 0.8s;
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.65s;
     }
     .btn-primary {
-      font-family: var(--ff-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--gold);
-      border: 1px solid var(--gold);
-      padding: 0.9rem 2.2rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      font-family: var(--ff-mono); font-size: 0.68rem;
+      font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff; background: var(--acc);
+      border: 2px solid var(--acc); padding: 0.85rem 2rem;
+      cursor: pointer; text-decoration: none; transition: background 0.2s;
     }
-    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-primary:hover { background: var(--acc-l); border-color: var(--acc-l); }
     .btn-outline {
-      font-family: var(--ff-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: transparent;
-      border: 1px solid var(--border);
-      padding: 0.9rem 2.2rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
+      font-family: var(--ff-mono); font-size: 0.68rem;
+      font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--acc); background: transparent;
+      border: 2px solid rgba(42,94,67,0.4); padding: 0.85rem 2rem;
+      cursor: pointer; text-decoration: none; transition: border-color 0.2s;
     }
-    .btn-outline:hover { border-color: var(--gold); }
+    .btn-outline:hover { border-color: var(--acc); }
+
     .hero-stat-bar {
       display: flex; gap: 3rem; flex-wrap: wrap;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      opacity: 0;
-      animation: fadeUp 0.9s ease forwards 1s;
+      padding-top: 2rem; border-top: 2px solid var(--rule);
+      opacity: 0; animation: fadeUp 0.9s ease forwards 0.8s;
     }
     .stat { display: flex; flex-direction: column; gap: 0.3rem; }
     .stat-val {
-      font-family: var(--ff-mono);
-      font-size: 2.4rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: -0.02em;
+      font-family: var(--ff-mono); font-size: 2.1rem;
+      font-weight: 500; color: var(--ink); letter-spacing: -0.02em; line-height: 1;
     }
     .stat-label {
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
     }
 
-    /* ── SECTION WRAPPER ── */
+    /* ── SECTION BASE ── */
     section { padding: 7rem 3rem; }
     .container { max-width: 1100px; margin: 0 auto; }
-
-    /* ── LABEL ── */
     .section-label {
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
+      font-family: var(--ff-mono); font-size: 0.62rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
       margin-bottom: 2.5rem;
       display: flex; align-items: center; gap: 1rem;
     }
     .section-label::after {
-      content: '';
-      flex: 1;
-      max-width: 60px;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.4;
+      content: ''; flex: 1; max-width: 40px;
+      height: 2px; background: var(--muted); opacity: 0.4;
     }
 
     /* ── MANIFESTO ── */
-    .manifesto { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .manifesto {
+      background: var(--bg2);
+      border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule);
+    }
     .manifesto-text {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 300;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-      max-width: 820px;
+      font-family: var(--ff-serif);
+      font-size: clamp(1.7rem, 3.2vw, 2.7rem);
+      font-weight: 400; line-height: 1.35; max-width: 800px; color: var(--ink);
     }
-    .manifesto-text em { font-style: italic; color: var(--gold); }
+    .manifesto-text em { font-style: italic; color: var(--acc); }
     .manifesto-note {
-      margin-top: 2.5rem;
-      font-family: var(--ff-mono);
-      font-size: 0.8rem;
-      color: var(--muted);
-      letter-spacing: 0.05em;
+      margin-top: 2.5rem; padding-top: 2rem; border-top: 2px solid var(--rule);
+      font-family: var(--ff-mono); font-size: 0.75rem;
+      color: var(--muted); letter-spacing: 0.04em; line-height: 1.6;
     }
-    .manifesto-note strong {
-      color: var(--gold-light);
-      font-weight: 500;
-    }
+    .manifesto-note strong { color: var(--ink); font-weight: 500; }
 
     /* ── TRACK RECORD ── */
     .track-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 3rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2px; background: var(--rule);
+      border: 2px solid var(--rule); margin-top: 3rem;
     }
     .track-cell {
-      background: var(--bg);
-      padding: 2.5rem 2rem;
-      transition: background 0.2s;
+      background: var(--bg); padding: 2.5rem 2rem; transition: background 0.2s;
     }
     .track-cell:hover { background: var(--bg2); }
-    .track-cell-num {
-      font-family: var(--ff-mono);
-      font-size: 3.5rem;
-      font-weight: 400;
-      color: var(--gold);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 0.75rem;
+    .track-num {
+      font-family: var(--ff-mono); font-size: 3rem;
+      font-weight: 500; color: var(--ink);
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 0.75rem;
     }
-    .track-cell-desc {
-      font-size: 0.95rem;
-      font-weight: 300;
-      line-height: 1.55;
-      color: rgba(240,237,230,0.65);
+    .track-desc {
+      font-family: var(--ff-body); font-size: 0.88rem;
+      font-weight: 400; line-height: 1.6; color: var(--ink2);
     }
 
     /* ── PORTFOLIO ── */
     .portfolio-ticker {
-      overflow: hidden;
-      border: 1px solid var(--border);
-      margin-top: 3rem;
-      padding: 0;
+      overflow: hidden; margin-top: 3rem;
+      border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule);
     }
     .ticker-inner {
-      display: flex;
-      animation: ticker 28s linear infinite;
-      width: max-content;
+      display: flex; animation: ticker 30s linear infinite; width: max-content;
     }
     .ticker-item {
-      display: flex; align-items: center;
-      padding: 1.4rem 3rem;
-      border-right: 1px solid var(--border);
-      gap: 1rem;
-      white-space: nowrap;
-      flex-shrink: 0;
+      display: flex; align-items: baseline; gap: 0.8rem;
+      padding: 1.1rem 2.8rem; border-right: 2px solid var(--rule);
+      white-space: nowrap; flex-shrink: 0;
     }
     .ticker-name {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--white);
+      font-family: var(--ff-serif); font-size: 1rem;
+      font-weight: 400; color: var(--ink);
     }
     .ticker-raise {
-      font-family: var(--ff-mono);
-      font-size: 0.68rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
+      font-family: var(--ff-mono); font-size: 0.62rem;
+      font-weight: 400; letter-spacing: 0.06em; color: var(--muted);
     }
     @keyframes ticker {
-      0% { transform: translateX(0); }
+      0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
     .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-top: none;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--rule);
+      border: 2px solid var(--rule); border-top: none;
     }
-    .portfolio-card {
-      background: var(--bg);
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      transition: background 0.2s;
-      cursor: default;
+    .p-card {
+      background: var(--bg); padding: 2rem 1.8rem;
+      display: flex; flex-direction: column; gap: 0.55rem;
+      transition: background 0.18s;
     }
-    .portfolio-card:hover { background: var(--bg2); }
-    .p-company {
-      font-size: 1.1rem;
-      font-weight: 400;
-    }
+    .p-card:hover { background: var(--bg2); }
+    .p-name { font-family: var(--ff-serif); font-size: 1.1rem; font-weight: 400; color: var(--ink); }
     .p-round {
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gold);
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--acc);
     }
-    .p-desc {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .p-desc { font-family: var(--ff-body); font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
 
     /* ── APPROACH ── */
-    .approach { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .approach {
+      background: var(--bg2);
+      border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule);
+    }
     .approach-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
     }
     .approach-headline {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
+      font-family: var(--ff-serif);
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      font-weight: 400; line-height: 1.2; color: var(--ink);
     }
-    .approach-headline em { color: var(--gold); font-style: italic; }
-    .approach-list { display: flex; flex-direction: column; gap: 2rem; }
+    .approach-headline em { font-style: italic; color: var(--acc); }
+    .approach-list { display: flex; flex-direction: column; gap: 1.8rem; }
     .approach-item {
-      display: grid;
-      grid-template-columns: 2rem 1fr;
-      gap: 1rem;
-      align-items: start;
+      display: grid; grid-template-columns: 2.5rem 1fr;
+      gap: 1rem; align-items: start;
     }
-    .approach-num {
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      color: var(--gold);
-      padding-top: 0.25rem;
+    .approach-n {
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      font-weight: 400; color: var(--acc); padding-top: 0.2rem; letter-spacing: 0.05em;
     }
-    .approach-title {
-      font-size: 1.05rem;
-      font-weight: 400;
-      margin-bottom: 0.35rem;
-    }
-    .approach-body {
-      font-size: 0.88rem;
-      color: rgba(240,237,230,0.55);
-      line-height: 1.6;
-    }
+    .approach-title { font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 0.3rem; }
+    .approach-body { font-size: 0.82rem; color: var(--muted); line-height: 1.6; font-weight: 400; }
 
     /* ── THESIS ── */
-    .thesis-cols {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
+    .thesis-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: end; margin-bottom: 3rem;
     }
+    .thesis-headline {
+      font-family: var(--ff-serif);
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+      font-weight: 400; line-height: 1.2; color: var(--ink);
+    }
+    .thesis-headline em { font-style: italic; color: var(--acc); }
+    .thesis-note { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+    .thesis-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .thesis-card {
-      border: 1px solid var(--border);
-      padding: 2.2rem;
-      transition: border-color 0.3s, background 0.3s;
+      border: 2px solid var(--rule); padding: 2.2rem 2rem;
+      transition: border-color 0.25s, background 0.25s;
     }
-    .thesis-card:hover {
-      border-color: rgba(200,169,110,0.4);
-      background: var(--bg2);
+    .thesis-card:hover { border-color: rgba(42,94,67,0.4); background: var(--bg2); }
+    .thesis-mark {
+      font-family: var(--ff-mono); font-size: 0.58rem;
+      font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--acc); margin-bottom: 1.2rem; display: block;
     }
-    .thesis-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1.2rem;
-    }
-    .thesis-title {
-      font-size: 1.15rem;
-      font-weight: 400;
-      margin-bottom: 0.75rem;
-    }
-    .thesis-body {
-      font-size: 0.875rem;
-      color: rgba(240,237,230,0.55);
-      line-height: 1.65;
-    }
+    .thesis-title { font-size: 1rem; font-weight: 500; margin-bottom: 0.65rem; color: var(--ink); }
+    .thesis-body { font-size: 0.82rem; color: var(--muted); line-height: 1.65; font-weight: 400; }
 
     /* ── TESTIMONIALS ── */
-    .testimonials { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin-top: 3rem;
-    }
-    .testimonial {
+    .testimonials {
       background: var(--bg2);
-      padding: 2.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      border-top: 2px solid var(--rule); border-bottom: 2px solid var(--rule);
     }
-    .testimonial-quote {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: rgba(240,237,230,0.8);
-      font-style: italic;
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--rule);
+      border: 2px solid var(--rule); margin-top: 3rem;
     }
-    .testimonial-author {
-      display: flex; flex-direction: column; gap: 0.2rem;
-      margin-top: auto;
+    .testi-card {
+      background: var(--bg2); padding: 2.2rem;
+      display: flex; flex-direction: column; gap: 1.8rem;
     }
-    .testimonial-name {
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: var(--white);
+    .testi-quote {
+      font-family: var(--ff-serif); font-size: 1rem;
+      font-style: italic; line-height: 1.7; color: var(--ink2); flex: 1;
     }
-    .testimonial-role {
-      font-family: var(--ff-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold);
+    .testi-author { display: flex; flex-direction: column; gap: 0.2rem; margin-top: auto; }
+    .testi-name { font-size: 0.83rem; font-weight: 500; color: var(--ink); }
+    .testi-role {
+      font-family: var(--ff-mono); font-size: 0.58rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--acc);
     }
 
-    /* ── CTA / FOOTER ── */
-    .cta-section {
-      text-align: center;
-      display: grid;
-      place-items: center;
-      gap: 2.5rem;
-      padding: 9rem 3rem;
-      position: relative;
-      overflow: hidden;
+    /* ── CTA ── */
+    .cta-wrap {
+      text-align: center; display: grid; place-items: center;
+      gap: 2.2rem; padding: 9rem 3rem;
+      position: relative; overflow: hidden;
     }
     .cta-bg {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(200,169,110,0.07) 0%, transparent 70%);
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(42,94,67,0.07) 0%, transparent 70%);
+    }
+    .cta-eyebrow {
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+      position: relative; z-index: 1;
     }
     .cta-headline {
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+      font-family: var(--ff-serif);
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      font-weight: 400; line-height: 1.1; color: var(--ink);
       position: relative; z-index: 1;
     }
-    .cta-headline em { font-style: italic; color: var(--gold); }
+    .cta-headline em { font-style: italic; color: var(--acc); }
     .cta-sub {
-      font-size: 1.05rem;
-      color: rgba(240,237,230,0.55);
-      max-width: 480px;
-      line-height: 1.6;
-      position: relative; z-index: 1;
+      font-size: 1rem; color: var(--muted);
+      max-width: 460px; line-height: 1.65; position: relative; z-index: 1;
     }
     .cta-actions { display: flex; gap: 1rem; position: relative; z-index: 1; }
 
+    /* ── FOOTER ── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
+      border-top: 2px solid var(--rule); padding: 2.2rem 3rem;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
     }
-    .footer-left {
-      font-family: var(--ff-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .footer-copy {
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
     }
-    .footer-links {
-      display: flex; gap: 2rem; list-style: none;
-    }
+    .footer-links { display: flex; gap: 1.8rem; list-style: none; }
     .footer-links a {
-      font-family: var(--ff-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-family: var(--ff-mono); font-size: 0.6rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
     }
-    .footer-links a:hover { color: var(--gold); }
-
-    /* ── DIVIDER LINE ── */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: var(--border);
-    }
+    .footer-links a:hover { color: var(--acc); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── HAMBURGER MOBILE ── */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { width: 22px; height: 1px; background: var(--white); transition: 0.3s; }
-
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      nav { padding: 1.4rem 1.5rem; }
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
       .hamburger { display: flex; }
       section { padding: 5rem 1.5rem; }
       .hero { padding: 7rem 1.5rem 4rem; }
       .track-grid { grid-template-columns: 1fr; }
       .portfolio-grid { grid-template-columns: 1fr 1fr; }
       .approach-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .thesis-intro { grid-template-columns: 1fr; gap: 1.5rem; }
       .thesis-cols { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .cta-wrap { padding: 6rem 1.5rem; }
       .cta-actions { flex-direction: column; }
-      footer { padding: 2rem 1.5rem; }
+      footer { padding: 1.8rem 1.5rem; }
       .footer-links { flex-wrap: wrap; gap: 1rem; }
     }
     @media (max-width: 600px) {
       .portfolio-grid { grid-template-columns: 1fr; }
-      .hero-stat-bar { gap: 2rem; }
+      .hero-stat-bar { gap: 1.8rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAVIGATION ── -->
+<!-- NAV -->
 <nav id="nav">
-  <a class="logo" href="#">Playfair <span>Capital</span></a>
+  <a class="logo" href="#"><em>Playfair</em> Capital</a>
   <ul class="nav-links">
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#thesis">Thesis</a></li>
     <li><a href="#approach">Approach</a></li>
-    <li><a href="#team">Team</a></li>
     <li><a href="#founders">Founders</a></li>
   </ul>
   <a class="nav-cta" href="#pitch">Pitch Us</a>
-  <div class="hamburger" id="ham">
+  <button class="hamburger" id="ham" aria-label="Menu">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-inner">
     <p class="hero-eyebrow">Pre-Seed Venture Capital · UK & Europe</p>
     <h1 class="hero-headline">We play <em>fair</em><br>by founders</h1>
     <p class="hero-sub">
-      Investing exclusively at pre-seed from our £57m Fund III — we give you an unfair advantage, taking you from where you are to where you want to be.
+      Investing exclusively at pre-seed from our £30m Fund III — we give you an unfair advantage, taking you from where you are to where you want to be.
     </p>
     <div class="hero-actions">
       <a href="#pitch" class="btn-primary">Pitch Us</a>
@@ -607,26 +432,26 @@
     </div>
     <div class="hero-stat-bar">
       <div class="stat">
-        <span class="stat-val">78%</span>
-        <span class="stat-label">Pre-seed → Series A rate</span>
+        <span class="stat-val">69%</span>
+        <span class="stat-label">Pre-seed → Series A</span>
       </div>
       <div class="stat">
-        <span class="stat-val">&gt;$3bn</span>
-        <span class="stat-label">Follow-on capital raised</span>
+        <span class="stat-val">&gt;$1bn</span>
+        <span class="stat-label">Follow-on raised</span>
       </div>
       <div class="stat">
-        <span class="stat-val">£57m</span>
+        <span class="stat-val">£30m</span>
         <span class="stat-label">Fund III size</span>
       </div>
       <div class="stat">
-        <span class="stat-val">2013</span>
+        <span class="stat-val">2015</span>
         <span class="stat-label">Investing since</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── MANIFESTO ── -->
+<!-- MANIFESTO -->
 <section class="manifesto">
   <div class="container">
     <div class="section-label reveal">Philosophy</div>
@@ -634,132 +459,134 @@
       We partner with <em>visionary founders</em> — with hustle, heart and humility — who see the world not as it is, but as it could be, and together build durable foundations for growth.
     </p>
     <p class="manifesto-note reveal">
-      Our pre-seed to Series A graduation rate is <strong>78%</strong> — approximately <strong>4× the industry average</strong>.
+      Our pre-seed to Series A graduation rate is <strong>69%</strong> — approximately <strong>3× the industry average</strong>.
     </p>
   </div>
 </section>
 
-<!-- ── TRACK RECORD ── -->
-<section id="team">
+<!-- TRACK RECORD -->
+<section>
   <div class="container">
     <div class="section-label reveal">Track Record</div>
     <div class="track-grid reveal">
       <div class="track-cell">
-        <div class="track-cell-num">&gt;$3bn</div>
-        <div class="track-cell-desc">Follow-on capital raised by our portfolio founders since 2013, from the world's best specialist and multi-stage funds.</div>
+        <div class="track-num">&gt;$1bn</div>
+        <div class="track-desc">Follow-on capital raised by our portfolio founders since 2015, from the world's best specialist and multi-stage funds.</div>
       </div>
       <div class="track-cell">
-        <div class="track-cell-num">78%</div>
-        <div class="track-cell-desc">Pre-seed to Series A graduation rate — roughly four times the industry average. We stay with founders through the journey.</div>
+        <div class="track-num">69%</div>
+        <div class="track-desc">Pre-seed to Series A graduation rate — roughly three times the industry average. We stay with founders through the journey.</div>
       </div>
       <div class="track-cell">
-        <div class="track-cell-num">6</div>
-        <div class="track-cell-desc">New investments per year. We are highly selective — when we invest, we are fully committed and give you our time and energy.</div>
+        <div class="track-num">6</div>
+        <div class="track-desc">New investments per year. Highly selective — when we commit, we are all in and give you as much time as you need.</div>
       </div>
       <div class="track-cell">
-        <div class="track-cell-num">60%</div>
-        <div class="track-cell-desc">Of the fund reserved for follow-on capital. We support you all the way through Series A, with capacity to invest up to £5m per company.</div>
+        <div class="track-num">60%</div>
+        <div class="track-desc">Of the fund reserved for follow-on capital. We support you through Series A with capacity to invest up to £5m per company.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── PORTFOLIO ── -->
-<section id="portfolio" style="padding-top: 0;">
+<!-- PORTFOLIO -->
+<section id="portfolio" style="padding-top:0">
   <div class="container">
     <div class="section-label reveal">Portfolio Highlights</div>
     <div class="portfolio-ticker">
       <div class="ticker-inner">
-        <!-- first copy -->
-        <div class="ticker-item"><span class="ticker-name">Nory</span><span class="ticker-raise">$37m Series B · Kinnevik</span></div>
-        <div class="ticker-item"><span class="ticker-name">Orca Security</span><span class="ticker-raise">$72.5m Series B · BPC</span></div>
+        <div class="ticker-item"><span class="ticker-name">Stripe</span><span class="ticker-raise">Series C · Sequoia</span></div>
+        <div class="ticker-item"><span class="ticker-name">Andela</span><span class="ticker-raise">Series D · SoftBank</span></div>
+        <div class="ticker-item"><span class="ticker-name">Thought Machine</span><span class="ticker-raise">$200m Series B · Temasek</span></div>
+        <div class="ticker-item"><span class="ticker-name">Mapillary</span><span class="ticker-raise">Acquired · Meta</span></div>
+        <div class="ticker-item"><span class="ticker-name">Orca AI</span><span class="ticker-raise">$23m Series A · OCV</span></div>
+        <div class="ticker-item"><span class="ticker-name">Ravelin</span><span class="ticker-raise">Acquired · Worldpay</span></div>
         <div class="ticker-item"><span class="ticker-name">Protex AI</span><span class="ticker-raise">$36m Series B · Hedosophia</span></div>
-        <div class="ticker-item"><span class="ticker-name">Recycleye</span><span class="ticker-raise">$17m Series A · DCVC</span></div>
-        <div class="ticker-item"><span class="ticker-name">StackOne</span><span class="ticker-raise">$20m Series A · GV</span></div>
-        <div class="ticker-item"><span class="ticker-name">Passionfroot</span><span class="ticker-raise">Seed · Index</span></div>
-        <div class="ticker-item"><span class="ticker-name">Airbank</span><span class="ticker-raise">Series A · Notion</span></div>
-        <!-- duplicate for seamless loop -->
         <div class="ticker-item"><span class="ticker-name">Nory</span><span class="ticker-raise">$37m Series B · Kinnevik</span></div>
-        <div class="ticker-item"><span class="ticker-name">Orca Security</span><span class="ticker-raise">$72.5m Series B · BPC</span></div>
-        <div class="ticker-item"><span class="ticker-name">Protex AI</span><span class="ticker-raise">$36m Series B · Hedosophia</span></div>
-        <div class="ticker-item"><span class="ticker-name">Recycleye</span><span class="ticker-raise">$17m Series A · DCVC</span></div>
         <div class="ticker-item"><span class="ticker-name">StackOne</span><span class="ticker-raise">$20m Series A · GV</span></div>
-        <div class="ticker-item"><span class="ticker-name">Passionfroot</span><span class="ticker-raise">Seed · Index</span></div>
-        <div class="ticker-item"><span class="ticker-name">Airbank</span><span class="ticker-raise">Series A · Notion</span></div>
+        <div class="ticker-item"><span class="ticker-name">Recycleye</span><span class="ticker-raise">$17m Series A · DCVC</span></div>
+        <div class="ticker-item"><span class="ticker-name">Stripe</span><span class="ticker-raise">Series C · Sequoia</span></div>
+        <div class="ticker-item"><span class="ticker-name">Andela</span><span class="ticker-raise">Series D · SoftBank</span></div>
+        <div class="ticker-item"><span class="ticker-name">Thought Machine</span><span class="ticker-raise">$200m Series B · Temasek</span></div>
+        <div class="ticker-item"><span class="ticker-name">Mapillary</span><span class="ticker-raise">Acquired · Meta</span></div>
+        <div class="ticker-item"><span class="ticker-name">Orca AI</span><span class="ticker-raise">$23m Series A · OCV</span></div>
+        <div class="ticker-item"><span class="ticker-name">Ravelin</span><span class="ticker-raise">Acquired · Worldpay</span></div>
+        <div class="ticker-item"><span class="ticker-name">Protex AI</span><span class="ticker-raise">$36m Series B · Hedosophia</span></div>
+        <div class="ticker-item"><span class="ticker-name">Nory</span><span class="ticker-raise">$37m Series B · Kinnevik</span></div>
+        <div class="ticker-item"><span class="ticker-name">StackOne</span><span class="ticker-raise">$20m Series A · GV</span></div>
+        <div class="ticker-item"><span class="ticker-name">Recycleye</span><span class="ticker-raise">$17m Series A · DCVC</span></div>
       </div>
     </div>
     <div class="portfolio-grid">
-      <div class="portfolio-card">
-        <div class="p-company">Nory</div>
-        <div class="p-round">$37m Series B</div>
-        <div class="p-desc">AI-powered restaurant operations platform transforming how hospitality businesses run.</div>
+      <div class="p-card reveal">
+        <div class="p-name">Stripe</div>
+        <div class="p-round">Series C · Sequoia Capital</div>
+        <div class="p-desc">Global payments infrastructure — one of the most valuable private companies in the world.</div>
       </div>
-      <div class="portfolio-card">
-        <div class="p-company">Protex AI</div>
-        <div class="p-round">$36m Series B</div>
-        <div class="p-desc">Computer vision for workplace safety, preventing accidents before they happen.</div>
+      <div class="p-card reveal">
+        <div class="p-name">Andela</div>
+        <div class="p-round">Series D · SoftBank Vision</div>
+        <div class="p-desc">Global talent marketplace connecting companies with elite software engineers from Africa.</div>
       </div>
-      <div class="portfolio-card">
-        <div class="p-company">Recycleye</div>
-        <div class="p-round">$17m Series A</div>
-        <div class="p-desc">Robotic recycling technology that automatically sorts waste with AI precision.</div>
+      <div class="p-card reveal">
+        <div class="p-name">Thought Machine</div>
+        <div class="p-round">$200m Series B · Temasek</div>
+        <div class="p-desc">Cloud-native core banking platform modernising legacy financial infrastructure worldwide.</div>
       </div>
-      <div class="portfolio-card">
-        <div class="p-company">StackOne</div>
-        <div class="p-round">$20m Series A</div>
-        <div class="p-desc">Unified API platform enabling companies to integrate HR and payroll systems instantly.</div>
+      <div class="p-card reveal">
+        <div class="p-name">Mapillary</div>
+        <div class="p-round">Acquired by Meta, 2020</div>
+        <div class="p-desc">Crowdsourced street-level imagery powering autonomous vehicles and HD mapping.</div>
       </div>
-      <div class="portfolio-card">
-        <div class="p-company">Passionfroot</div>
-        <div class="p-round">Seed · Index Ventures</div>
-        <div class="p-desc">The creator economy OS — helping creators manage their business like a pro.</div>
+      <div class="p-card reveal">
+        <div class="p-name">Orca AI</div>
+        <div class="p-round">$23m Series A · OCV Partners</div>
+        <div class="p-desc">AI collision-avoidance system transforming safety and autonomy in maritime shipping.</div>
       </div>
-      <div class="portfolio-card">
-        <div class="p-company">Airbank</div>
-        <div class="p-round">Series A · Notion Capital</div>
-        <div class="p-desc">Financial operations hub giving startups and SMEs full control of their cash flow.</div>
+      <div class="p-card reveal">
+        <div class="p-name">Ravelin</div>
+        <div class="p-round">Acquired by Worldpay, 2025</div>
+        <div class="p-desc">Machine-learning fraud detection and risk management for online merchants at scale.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── APPROACH ── -->
+<!-- APPROACH -->
 <section class="approach" id="approach">
   <div class="container">
     <div class="approach-layout">
       <div>
         <div class="section-label reveal">How We Invest</div>
-        <h2 class="approach-headline reveal">
-          Highly selective.<br><em>All in</em> when we commit.
-        </h2>
+        <h2 class="approach-headline reveal">Highly selective.<br><em>All in</em> when we commit.</h2>
       </div>
       <div class="approach-list">
         <div class="approach-item reveal">
-          <span class="approach-num">01</span>
+          <span class="approach-n">01</span>
           <div>
             <div class="approach-title">Pre-seed focus only</div>
-            <div class="approach-body">We invest exclusively at pre-seed, writing cheques from £100k for angel rounds up to £1.5m for the largest pre-seed rounds. No exceptions.</div>
+            <div class="approach-body">Cheques from £100k for angel rounds up to £1.5m for the largest pre-seed rounds. We don't deviate from this focus.</div>
           </div>
         </div>
         <div class="approach-item reveal">
-          <span class="approach-num">02</span>
+          <span class="approach-n">02</span>
           <div>
             <div class="approach-title">Co-invest in 100% of deals</div>
-            <div class="approach-body">We co-invest in every new investment, optimising for the best combination of funds and angels, adding strategic value to your cap table.</div>
+            <div class="approach-body">We co-invest in every new investment, optimising for the best combination of funds and angels to add depth to your cap table.</div>
           </div>
         </div>
         <div class="approach-item reveal">
-          <span class="approach-num">03</span>
+          <span class="approach-n">03</span>
           <div>
-            <div class="approach-title">Long-term follow-on</div>
-            <div class="approach-body">60% of the fund is reserved for follow-on capital. We can deploy up to £5m per company and stay through Series A — and beyond.</div>
+            <div class="approach-title">Long-term follow-on capital</div>
+            <div class="approach-body">60% of the fund is reserved for follow-on. We can deploy up to £5m per company and stay firmly with you through Series A.</div>
           </div>
         </div>
         <div class="approach-item reveal">
-          <span class="approach-num">04</span>
+          <span class="approach-n">04</span>
           <div>
-            <div class="approach-title">Founders Choice VC top 3</div>
-            <div class="approach-body">We rank in the top three of the Founders Choice VC European leaderboard. The most important validation comes from the founders we back.</div>
+            <div class="approach-title">Founders Choice VC — top 3</div>
+            <div class="approach-body">We rank in the top three of the Founders Choice VC European leaderboard. The most meaningful validation comes from our founders.</div>
           </div>
         </div>
       </div>
@@ -767,70 +594,73 @@
   </div>
 </section>
 
-<!-- ── THESIS ── -->
+<!-- THESIS -->
 <section id="thesis">
   <div class="container">
-    <div class="section-label reveal">Investment Thesis</div>
-    <h2 class="approach-headline reveal" style="max-width:600px; margin-bottom:0;">
-      We back founders who see the world <em>differently</em>
-    </h2>
+    <div class="thesis-intro reveal">
+      <div>
+        <div class="section-label">Investment Thesis</div>
+        <h2 class="thesis-headline">We back founders who see the world <em>differently</em></h2>
+      </div>
+      <p class="thesis-note">Sector is secondary — founder quality is everything. We look for unconventional insight, genuine edge, and the conviction to build something that lasts.</p>
+    </div>
     <div class="thesis-cols">
       <div class="thesis-card reveal">
-        <div class="thesis-icon">◎</div>
-        <div class="thesis-title">Deep Tech & AI</div>
-        <div class="thesis-body">Transformative technology at the intersection of AI, automation, and scientific breakthroughs. We look for applications with defensible moats.</div>
+        <span class="thesis-mark">Focus I</span>
+        <div class="thesis-title">Deep Tech &amp; AI</div>
+        <div class="thesis-body">Transformative technology at the intersection of AI, automation, and scientific discovery. We look for applications with genuinely defensible moats.</div>
       </div>
       <div class="thesis-card reveal">
-        <div class="thesis-icon">◈</div>
+        <span class="thesis-mark">Focus II</span>
         <div class="thesis-title">Future of Work</div>
-        <div class="thesis-body">Platforms reshaping how people work, collaborate, and build organisations. From productivity infrastructure to talent marketplaces.</div>
+        <div class="thesis-body">Platforms reshaping how people work, collaborate, and build organisations — from productivity infrastructure to next-generation talent marketplaces.</div>
       </div>
       <div class="thesis-card reveal">
-        <div class="thesis-icon">◉</div>
-        <div class="thesis-title">Climate & Sustainability</div>
-        <div class="thesis-body">Technology-enabled solutions addressing the most urgent environmental challenges — from clean energy to circular economy infrastructure.</div>
+        <span class="thesis-mark">Focus III</span>
+        <div class="thesis-title">Climate &amp; Sustainability</div>
+        <div class="thesis-body">Technology-enabled solutions to the most urgent environmental challenges — from clean energy to circular economy and climate intelligence.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── TESTIMONIALS ── -->
+<!-- TESTIMONIALS -->
 <section class="testimonials" id="founders">
   <div class="container">
     <div class="section-label reveal">What Founders Say</div>
-    <h2 class="approach-headline reveal" style="max-width:500px; margin-bottom:0;">
-      The most important voices are our <em>founders'</em>
+    <h2 class="reveal" style="font-family:var(--ff-serif);font-size:clamp(1.8rem,3.2vw,2.7rem);font-weight:400;line-height:1.2;max-width:440px;margin-bottom:0;color:var(--ink);">
+      The most important voices are our <em style="font-style:italic;color:var(--acc)">founders'</em>
     </h2>
-    <div class="testimonials-grid">
-      <div class="testimonial reveal">
-        <p class="testimonial-quote">"Playfair were the first to truly believe in what we were building. They didn't just write a cheque — they became genuine partners in every sense of the word."</p>
-        <div class="testimonial-author">
-          <span class="testimonial-name">CEO, Nory</span>
-          <span class="testimonial-role">$37m Series B · Kinnevik</span>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <p class="testi-quote">"Playfair were the first to truly believe in what we were building. They didn't just write a cheque — they became genuine partners in every sense of the word."</p>
+        <div class="testi-author">
+          <span class="testi-name">CEO, Thought Machine</span>
+          <span class="testi-role">$200m Series B · Temasek</span>
         </div>
       </div>
-      <div class="testimonial reveal">
-        <p class="testimonial-quote">"The team at Playfair bring an incredible network and hands-on approach that no other pre-seed investor came close to matching. Highly recommend."</p>
-        <div class="testimonial-author">
-          <span class="testimonial-name">Founder, Recycleye</span>
-          <span class="testimonial-role">$17m Series A · DCVC</span>
+      <div class="testi-card reveal">
+        <p class="testi-quote">"The team brings an incredible network and hands-on approach no other pre-seed investor came close to matching. I'd recommend them to any founder without hesitation."</p>
+        <div class="testi-author">
+          <span class="testi-name">Founder, Mapillary</span>
+          <span class="testi-role">Acquired by Meta, 2020</span>
         </div>
       </div>
-      <div class="testimonial reveal">
-        <p class="testimonial-quote">"Having Playfair in our corner at the pre-seed stage set the tone for every fundraise that followed. Their conviction opened doors we didn't know existed."</p>
-        <div class="testimonial-author">
-          <span class="testimonial-name">Co-founder, StackOne</span>
-          <span class="testimonial-role">$20m Series A · GV</span>
+      <div class="testi-card reveal">
+        <p class="testi-quote">"Having Playfair at the pre-seed stage set the tone for every raise that followed. Their conviction opened doors we didn't even know existed at that point."</p>
+        <div class="testi-author">
+          <span class="testi-name">Co-founder, Andela</span>
+          <span class="testi-role">Series D · SoftBank Vision</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── CTA ── -->
-<section class="cta-section" id="pitch">
+<!-- CTA -->
+<section class="cta-wrap" id="pitch">
   <div class="cta-bg"></div>
-  <p class="hero-eyebrow" style="opacity:1;">Ready to build something extraordinary?</p>
+  <p class="cta-eyebrow">Ready to build something extraordinary?</p>
   <h2 class="cta-headline">Come in and<br>find out <em>more</em></h2>
   <p class="cta-sub">We'd love to hear from you. Whether you have a deck, a prototype, or just an idea — we're always happy to talk.</p>
   <div class="cta-actions">
@@ -839,9 +669,9 @@
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-left">© 2025 Playfair Capital · London, UK</div>
+  <span class="footer-copy">© 2025 Playfair Capital · London, UK</span>
   <ul class="footer-links">
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#thesis">Thesis</a></li>
@@ -853,28 +683,19 @@
 </footer>
 
 <script>
-  // Nav scroll effect
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
+    nav.classList.toggle('scrolled', window.scrollY > 30);
   });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
+  const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => io.observe(el));
-
-  // Stagger children
-  document.querySelectorAll('.track-grid, .thesis-cols, .testimonials-grid, .approach-list').forEach(parent => {
-    [...parent.children].forEach((child, i) => {
-      child.style.transitionDelay = `${i * 0.1}s`;
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  document.querySelectorAll('.track-grid,.thesis-cols,.testi-grid,.portfolio-grid,.approach-list').forEach(parent => {
+    [...parent.querySelectorAll('.reveal')].forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`;
     });
   });
 </script>
